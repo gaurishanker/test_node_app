@@ -4,12 +4,14 @@ const bodyParser = require('body-parser');
 const user = require('./routes/user.route');
 var app = express();
 var path = require('path');
+require('dotenv').config()
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
-let dev_db_url = 'mongodb://admin:admin@localhost:27017/test';
+let dev_db_url = process.env.MONGODB_URI
+// "mongodb+srv://admin:KJLuitiGhUNFEEz4@cluster0-nntl0.mongodb.net/test";
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
